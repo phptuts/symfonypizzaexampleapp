@@ -1,0 +1,73 @@
+
+"common_toggle" : "Botón toggle"
+"views_common_nav_title" : "Pizza impresionante"
+"views_common_nav_home" : "Casa"
+"views_common_nav_order" : "Pedir una pizza"
+"views_common_nav_api_doc" : "Api Documentación"
+"views_common_nav_language" : "Idioma"
+
+"views_home_order_title" : "Realice su pedido"
+"views_home_order_lastname" : "Apellido"
+"views_home_order_phone_label" : "Teléfono"
+"views_home_order_close_sr" : "Cerca"
+"views_home_order_add_pizza" : "Añadir pizza"
+"view_submit_order_form" : "Presentar"
+"views_addorder_ajax_validation_error" : "Error al enviar su pedido"
+"views_home_order_pizza" : "Construir pizza"
+"views_home_order_pizza" : "Tipo de pizza"
+"views_home_order_pizza_number" : "Número de pizza"
+"views_home_order_topping" : "Ingredientes"
+"views_home_order_topping_max" : "Max 5 coberturas"
+
+"view_order_show_order_id" : "ID del pedido"
+"view_order_show_order_is_not_ready" : "Not Ready"
+"view_order_show_order_is_ready" : "No preparado"
+"view_order_show_name" : "Pizza listo"
+"view_order_show_type" : "Pizza o Toping??"
+"view_order_show_price" : "Precio"
+"view_order_show_total" : "Total"
+"views_order_home_page" : "Home Page"
+
+"datatranserobject_customer_phone_notblank" : "Número de teléfono no puede estar en blanco"
+"datatranserobject_customer_phone_length" : "Número de teléfono debe estar entre 4 y 20 caracteres"
+"datatranserobject_customer_lastname_notblank" : "Apellido no puede estar en blanco"
+"datatranserobject_customer_lastname_length" : "Apellidos tiene que ser de entre 3 a 50 caracteres"
+
+"datatranserobject_customer_pizzas_count" : "Usted debe pedir 1-50 tipos de pizza"
+"datatranserobject_customer_amount_notblank" : "Debe especificar cuántos pasteles desea"
+"datatranserobject_customer_topping_count"  : "No se puede tener más de 5 ingredientes"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

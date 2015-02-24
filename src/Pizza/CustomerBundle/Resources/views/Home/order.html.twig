@@ -1,0 +1,212 @@
+{% extends "PizzaCustomerBundle::layout.html.twig" %}
+{% form_theme addorder 'PizzaCustomerBundle:Common:form.html.twig' %}
+{% import _self as forms %}
+{% block body %}
+           
+    {% set div_class_length = 'col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1 col-xs-12 ' %}
+
+    <div class="row">
+            <h1 class="{{ div_class_length }}">{% trans %}views_home_order_title{% endtrans %}</h1>
+    </div>
+        
+        
+        
+        {{ form_start(addorder, {'type' : 'POST', 'attr' : {'id' : 'form_addorder', 
+            'novalidate' : 'novalidate', 'class' : div_class_length} } ) }}
+        
+        <div class="row">
+            <div class="col-md-4 ">
+                {{ form_row(addorder.lastname, 
+                {
+                        'label' : 'views_home_order_lastname',
+                        'attr' : {'class' : 'form-control'}
+                }) 
+                }}
+            </div>
+            <div class="col-md-4 col-md-offset-1">
+                {{ form_row(addorder.phone, 
+                {
+                        'label' : 'views_home_order_phone_label',
+                        'attr' : {'class' : 'form-control', 'placeholder' : '555-555-3333'}
+                }) 
+                }}
+            </div>
+        </div>
+            
+        <div   class="has-feedback form_valid hide_error fake_error_container alert alert-danger col-md-10" >
+                    <button type="button" class="close" >
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">{% trans %}views_home_order_close_sr{% endtrans %}</span>
+                    </button>
+               <span id="{{ addorder.pizzas.vars.id }}"></span>
+               <span   class="help-block hide_error"></span>
+        </div>
+               
+            <button style="clear: both; float: left;" id='addpizzatype' type='button' class='btn btn-success'>{% trans %}views_home_order_add_pizza{% endtrans %}</button>
+
+                <span id="pizza-prototype" data-prototype='{{ forms.renderPizza(addorder.pizzas.vars.prototype|escape) }}' ></span>
+                <div style="clear: both;" id='pizza_container'>
+                    
+                </div>
+                {% do addorder.pizzas.setRendered %}
+                <div style="clear: both;"  class="row">
+                    <div class="col-md-10">
+                <button class="btn btn-success pull-right" style="margin-top: 20px;" id="pizza_submit_btn" type="button">{% trans %}view_submit_order_form{% endtrans %}</button>
+                    </div>
+                </div>
+        {{ form_end(addorder) }}
+        
+        
+        
+        
+        
+{% endblock %}
+
+{% block js %}
+    {{ parent() }}
+        <script type='text/javascript' src='{{ asset('bundles/pizzacustomer/js/jquery.helper.js') }}' ></script>
+
+        <script type='text/javascript' src='{{ asset('bundles/pizzacustomer/js/jquery.form.js') }}' ></script>
+    <script type='text/javascript' src='{{ asset('bundles/pizzacustomer/js/jquery.symfonyajaxvalidation.js') }}' ></script>
+
+    <script type='text/javascript' src='{{ asset('bundles/pizzacustomer/js/jquery.symfonycollection.js') }}' ></script>
+    <script type='text/javascript'>
+         $("div#pizza_container").symfonycollection(
+                {
+                    prototype_id : 'pizza-prototype',//The id of the element storing the data prototype
+                    prototype_replace_string: 'pizza_replace__',//The string used to replace the 
+                    prototype_attribute : 'data-prototype',//attribute in the html element where the prototype is stored
+                    hidden_order_field_class : 'partner_sort_order',//The class of the hidden input field that stores the order
+                    start_sort_order : 0, //The starting place for the counter used to populate the 
+                    add_button_id: 'addpizzatype', //This is the id of button that adds the row
+                    delete_button_class: 'delete_row',//This is the class of buttons that deletes the row
+                    move_class : 'move',
+                    move_up_class : 'move_up_btn',
+                    move_down_class : 'move_down_btn',
+                    selector_for_sortable  : "div.pizza-order",//Element being move by jquery ui
+                    regex_for_id: /addorder_pizzas_[\d]/g, //this is the regex to replace id on reindex
+                    regex_for_name: /addorder\[pizzas]\[\d\]/g, //this is the regex to replace the name
+                    jquery_placeholder_class : "placeholder-jquery-ui",//This is the placehoder element for jquery sortable
+                    delete_event: function()
+                    {
+                        
+                    },
+                    add_event: function()
+                    {
+                       $(".pizza_type_select").each(function(){
+                         pizzadescription($(this).parents('div.pizza-order'));
+                     }); 
+                    }
+                    
+                }    
+            );
+    
+            $("form#form_addorder").symfonyajaxvalidation({
+            submit_button_id: 'pizza_submit_btn',//The id of the button
+            ajax_url : "{{ path("ajax_validation") }}",//The url to go for validation
+            error_message : '{% trans %}views_addorder_ajax_validation_error{% endtrans %}',//The error message that is alerted if something goes wrong
+            successCallback : 
+            function()
+            { 
+                $("form#form_addorder").submit();
+            },//This is the function that executes if the form is valid
+            fake_error  : 'fake_error_container',//Container for the collection / form errors
+            fake_alert_close_button_class: 'close',
+            validationFailsCallback:
+               function()
+               {
+                    
+               }
+                    
+        });
+    
+            function pizzadescription(parent)
+            {
+               var id =  parent.find(".pizza_type_select").val();
+               parent.find('p.pizzadesc').hide();
+               parent.find('p.pizza_desc_' +  id).show();
+            }
+            
+            $(".pizza_type_select").each(function(){
+                pizzadescription($(this).parents('div.pizza-order'));
+            });
+            
+             $(document).on("change", ".pizza_type_select",function(){
+                 pizzadescription($(this).parents('div.pizza-order'));
+             });
+             
+     </script>
+
+{% endblock %}
+
+{% macro renderPizza(pizza) %}
+            
+    <div class="pizza-order col-md-10">
+        <h2 class="pizza">{% trans %}views_home_order_pizza{% endtrans %}</h2>
+        <div class="row">
+            <div class="col-md-12  col-sm-12  col-xs-12">
+                <div class="col-md-5">
+                        {{ form_row(pizza.children.type, 
+                        {
+                                'label' : 'views_home_order_pizza',
+                                'attr' : {'class' : 'form-control pizza_type_select'}
+                        }) 
+                        }}
+                </div>
+
+                <div class="col-md-5 col-md-offset-1">
+                        {{ form_row(pizza.children.amount, 
+                        {
+                                'label' : 'views_home_order_pizza_number',
+                                'attr' : {'class' : 'form-control'}
+                        }) 
+                        }}
+                </div>
+            </div>
+                
+                
+    </div>
+        <div class="row">
+            <div class="col-md-12  col-sm-12  col-xs-12">
+                {% for descpizza in pizza.vars.pizza %}
+                    <p class="pizzadesc pizza_desc_{{ loop.index }}">
+                        {{ descpizza.description }} (${{ descpizza.price |number_format(2, '.') }})
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <h2 style="margin-left: 30px;">{% trans %}views_home_order_topping{% endtrans %} ({% trans %}views_home_order_topping_max{% endtrans %})</h2>
+                <div  style="margin-left: 30px;" class="has-feedback form_valid hide_error fake_error_container alert alert-danger col-md-11" >
+                        <button type="button" class="close" >
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">{% trans %}views_home_order_close_sr{% endtrans %}</span>
+                        </button>
+                   <span id="{{ pizza.children.toppings.vars.id }}"></span>
+                   <span   class="help-block hide_error"></span>
+                </div>
+            <div class="col-md-10  col-sm-10  col-xs-12">
+            {% for topping in pizza.children.toppings %}
+                {{ _self.renderCheckBox(topping, pizza.vars.topping) }}
+            {% endfor %}
+            </div>
+        </div>
+            
+        <div class="col-md-12 col-sm-12 col-xs-12 image_container" >
+            <img src="{{ asset('bundles/pizzacustomer/images/move.png') }}" class="move hidden-xs hidden-sm"  />
+            <img src="{{ asset('bundles/pizzacustomer/images/uparrow.png') }}" class="move_controls move_up_btn" />
+            <img src="{{ asset('bundles/pizzacustomer/images/downarrow.png') }}" class="move_controls move_down_btn " />
+            <button class="btn btn-danger delete_row" type="button"><span class="glyphicon glyphicon-trash"></span></button>
+        </div>
+    </div>
+    
+{% endmacro %}
+
+
+{% macro renderCheckBox(checkbox, toppingInfo) %}
+    <div class="checkbox-pizza col-md-4">
+        <label for="{{ checkbox.vars.id }}" >{{ checkbox.vars.label }} (${{ toppingInfo[checkbox.vars.value].price |number_format(2, '.') }})
+        {{ form_widget(checkbox) }}
+    </div>
+    
+{% endmacro %}

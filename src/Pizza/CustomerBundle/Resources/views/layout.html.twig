@@ -1,0 +1,51 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/pizzacustomer/css/style.css') }}" rel="stylesheet" media="all" />
+{% endblock %}
+
+{% block nav %}
+    {{ parent() }}
+    {% include 'PizzaCustomerBundle:Common:nav.html.twig' %}
+{% endblock %}
+
+
+{% block body %}
+    
+{% endblock %}
+
+
+{% block js %}
+    
+    {{ parent() }}
+    
+     <script type='text/javascript'>
+        (function($){
+            
+            
+            $("li a.localeChanger").on('click', function(){
+                var ajaxUrl = "{{ path('pizza_customer_changelocale', {'_locale' : 'thl'}) }}";
+                ajaxUrl = ajaxUrl.replace('thl', $(this).attr('data-locale'));
+               $.ajax({
+                   url: ajaxUrl,
+                   success: function(data)
+                   {
+                       if(data.success === true)
+                       {
+                           location.reload();
+                       }
+                       else
+                       {
+                           alert('{% trans %}views_layout_change_localization_error{% endtrans %}')
+                       }
+                   },
+                   error: function()
+                  {
+                    alert('{% trans %}views_layout_change_localization_error{% endtrans %}')             
+                  }
+               }); 
+            });
+            
+        }(jQuery));
+    </script>
+{% endblock %}

@@ -1,0 +1,15 @@
+pizza_customer_order:
+    path:     /order
+    defaults: { _controller: PizzaCustomerBundle:Order:order }
+
+pizza_customer_show_order:
+    path: /order/{orderId}
+    defaults: { _controller: PizzaCustomerBundle:Order:showOrder }
+    
+pizza_customer_home:
+    path:     /
+    defaults: { _controller: PizzaCustomerBundle:Order:home }
+    
+pizza_customer_changelocale:
+    path: /locale/change/{_locale}
+    defaults: { _controller: PizzaCustomerBundle:Order:changeLocalization }

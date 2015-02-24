@@ -1,0 +1,62 @@
+services:
+    
+    pizza_customer.entity.category:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Pizza\CustomerBundle\Entity\Category
+
+    pizza_customer.entity.product:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Pizza\CustomerBundle\Entity\Product
+            
+    pizza_customer.entity.customer:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Pizza\CustomerBundle\Entity\Customer
+            
+    pizza_customer.entity.customerorder:
+        class: Doctrine\ORM\EntityRepository
+        factory_service: doctrine.orm.default_entity_manager
+        factory_method: getRepository
+        arguments:
+            - Pizza\CustomerBundle\Entity\CustomerOrder
+
+
+    
+    pizza_customer.form.addorder:
+        class: Pizza\CustomerBundle\Form\AddOrder
+        tags:
+            - { name: form.type, alias: addorder }
+        
+
+    pizza_customer.form.pizza:
+        class: Pizza\CustomerBundle\Form\Pizza
+        arguments: [@pizza_customer.entity.category]
+        tags:
+            - { name: form.type, alias: pizza }
+            
+
+    pizza_customer.mapper.database.customer:
+        class: Pizza\CustomerBundle\Mapper\Database\Customer
+        arguments: [@doctrine.orm.default_entity_manager,  @pizza_customer.entity.customer]
+
+    pizza_customer.mapper.database.order:
+        class: Pizza\CustomerBundle\Mapper\Database\Order
+        arguments: [@pizza_customer.entity.product]
+
+    pizza_customer.mapper.rest.order:
+        class: Pizza\CustomerBundle\Mapper\Rest\Orders
+        arguments: [@pizza_customer.entity.customerorder]
+
+    pizza_customer.locale_listener:
+        class: Pizza\CustomerBundle\Event\LocaleListener
+        arguments: ["%kernel.default_locale%"]
+        tags:
+            - { name: kernel.event_subscriber }

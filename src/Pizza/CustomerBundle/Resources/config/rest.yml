@@ -1,0 +1,6 @@
+## YAML Template.
+---
+orders:
+    type: rest
+    resource: Pizza\CustomerBundle\Controller\OrderRestController
+    name_prefix:  api_simple # naming collision

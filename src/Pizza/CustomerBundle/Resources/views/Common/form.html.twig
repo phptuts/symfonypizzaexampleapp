@@ -1,0 +1,73 @@
+{# empty Twig template #}
+{% block form_row %}
+{% spaceless %}
+    
+    <div class="form_valid form-group {% if errors|length > 0 %} has-error {% endif %}  has-feedback
+         {% if div.class is defined %}
+              {{ div.class|raw }}
+          {% endif %}
+             ">
+        
+      {% if div_mid.class is defined %}
+          {% set div_mid_class = 'class="' ~ div_mid.class|raw ~ '"' %}
+          {% else %}
+          {% set div_mid_class = "" %}
+      {% endif %}
+      
+                <div {{ div_mid_class|raw }} >
+                     {{ form_label(form) }}
+                     {{ form_widget(form) }}
+                     {{ form_errors(form) }}
+                </div>  
+    </div>
+{% endspaceless %}
+{% endblock  %}
+
+
+{% block form_label %}
+    {% spaceless %}
+         <label class="control-label" for="{{ id }}">{{ label|trans }}</label>
+    {% endspaceless %}    
+{% endblock %}
+
+
+{% block form_errors %}
+        {% spaceless %}
+            {% if errors|length > 0 %}
+                    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+                    <span class="help-block ">{{ errors[0].message|trans }}</span>
+                       {% else %}
+                    <span class="glyphicon glyphicon-remove form-control-feedback hide_error"></span>
+                    <span class="help-block hide_error"></span>                           
+            {% endif %}
+        {% endspaceless %}
+
+{% endblock %}
+
+{% block file_row %}
+        <div class="form_valid form-group {% if errors|length > 0 %} has-error {% endif %}  has-feedback
+         {% if div.class is defined %}
+              {{ div.class|raw }}
+          {% endif %}
+             ">
+        
+      {% if div_mid.class is defined %}
+          {% set div_mid_class = 'class="' ~ div_mid.class|raw ~ '"' %}
+          {% else %}
+          {% set div_mid_class = "" %}
+      {% endif %}
+      
+                <div {{ div_mid_class|raw }} >
+                     {{ form_label(form) }}
+                     {{ form_widget(form) }}
+                     {% spaceless %}
+                            {% if errors|length > 0 %}
+                                    <span class="help-block">{{ errors[0].message|trans }}</span>
+                                       {% else %}
+                                    <span class="help-block hide_error"></span>                           
+                            {% endif %}
+                     {% endspaceless %}
+                </div>  
+    </div>
+    
+{% endblock %}

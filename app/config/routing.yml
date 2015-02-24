@@ -1,0 +1,16 @@
+pizza_customer:
+    resource: "@PizzaCustomerBundle/Resources/config/routing.yml"
+    prefix:   /
+
+pizza_customer_api:
+    type: rest
+    resource: "@PizzaCustomerBundle/Resources/config/rest.yml"
+
+noahglaser_validationbundle:
+    resource: "@NoahGlaserValidationBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+NelmioApiDocBundle:
+    resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+    prefix:   /documentation
+

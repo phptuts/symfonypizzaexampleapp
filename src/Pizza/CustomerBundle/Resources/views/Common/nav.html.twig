@@ -1,0 +1,30 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">{% trans %}common_toggle{% endtrans %}</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">{% trans %}views_common_nav_title{% endtrans %}</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li {% if page == 'home' %}class="active" {% endif %}><a  href="{{ path('pizza_customer_home') }}">{% trans %}views_common_nav_home{% endtrans %}</a></li>
+        <li {% if page == 'order' %}class="active" {% endif %} ><a href="{{ path('pizza_customer_order') }}">{% trans %}views_common_nav_order{% endtrans %}</a></li>
+        <li><a href="documentation">{% trans %}views_common_nav_api_doc{% endtrans %}</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% trans %}views_common_nav_language{% endtrans %} <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a class="localeChanger" data-locale="en" href="#">English</a></li>
+            <li><a class="localeChanger"  data-locale="es" href="#">Español</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
