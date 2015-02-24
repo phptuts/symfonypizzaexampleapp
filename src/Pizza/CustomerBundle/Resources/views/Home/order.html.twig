@@ -127,7 +127,8 @@
                parent.find('p.pizza_desc_' +  id).show();
             }
             
-            $(".pizza_type_select").each(function(){
+            $(".pizza_type_select").each(function()
+            {
                 pizzadescription($(this).parents('div.pizza-order'));
             });
             
@@ -169,7 +170,7 @@
         <div class="row">
             <div class="col-md-12  col-sm-12  col-xs-12">
                 {% for descpizza in pizza.vars.pizza %}
-                    <p class="pizzadesc pizza_desc_{{ loop.index }}">
+                    <p class="pizzadesc pizza_desc_{{ descpizza.id }}">
                         {{ descpizza.description }} (${{ descpizza.price |number_format(2, '.') }})
                     </p>
                 {% endfor %}

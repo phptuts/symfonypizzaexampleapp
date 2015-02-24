@@ -73,6 +73,8 @@ class Pizza extends AbstractType
             $id = $product->getId();
             $view->vars['pizza'][$id]['description'] = $product->getDescription();
             $view->vars['pizza'][$id]['price'] = $product->getPrice();
+            $view->vars['pizza'][$id]['id'] = $product->getId();
+
         }
         
         foreach($this->toppings as $topping)
@@ -80,6 +82,7 @@ class Pizza extends AbstractType
             $id = $topping->getId();
             $view->vars['topping'][$id]['description'] = $topping->getDescription();
             $view->vars['topping'][$id]['price'] = $topping->getPrice();
+
 
         }
         

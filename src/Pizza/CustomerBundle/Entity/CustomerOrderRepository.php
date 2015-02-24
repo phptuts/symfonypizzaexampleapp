@@ -21,7 +21,7 @@ class CustomerOrderRepository extends EntityRepository
                 ->createQuery($dql)
                 ->setParameter('customer', $customer)   
                 ->setMaxResults(1)
-                ->setFirstResult(1)
+                ->setFirstResult(0)
                 ->getResult()[0]['id'];
         
         
